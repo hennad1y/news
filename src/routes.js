@@ -21,7 +21,7 @@ export default () => {
             <Route path="/dashboard" component={Dashboard}/>
 
             {/*error*/}
-            <Route path="/" component={Error}/>
+            <Route component={Error}/>
         </Switch>
     )
 }
