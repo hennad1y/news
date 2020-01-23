@@ -5,6 +5,8 @@ import {UserProvider} from "context/userContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import "./firebase";
+
 import Routes from "routes";
 
 const App = () => {
