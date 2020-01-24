@@ -1,0 +1,14 @@
+.landing .nav-link:hover {
+    color: #fff;
+    background-color: #007bff;
+}
+
+.landing-form-wrapper {
+    height: calc(100vh - 40px - .5rem);
+    max-height: 600px;
+}
+
+.landing-form {
+    width: 100%;
+    max-width: 320px;
+}
