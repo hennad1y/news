@@ -12,3 +12,32 @@
     width: 100%;
     max-width: 320px;
 }
+
+.spinner-grow {
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    left: calc(50% - 3rem);
+    top: calc(50% - 3rem);
+}
+
+.card {
+    height: 100%;
+}
+
+.card .btn {
+    position: absolute;
+    bottom: .5rem;
+    right: 1.25rem;
+}
+
+.card img {
+    height: 152px;
+}
+
+.cabinet-nav {
+    position: fixed;
+    height: 100vh;
+    padding: 10px 0;
+    width: 160px;
+}
