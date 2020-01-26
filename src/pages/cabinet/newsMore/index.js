@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import LayoutCabinet from "pages/cabinet/layoutCabinet";
 import useAxios from "hooks/useAxios";
 import {UserContext} from "context/userContext";
 import {Link} from "react-router-dom";
@@ -18,12 +17,12 @@ const NewsMore = ({match}) => {
     }, [doAxios, userState]);
 
     useEffect(() => {
-        if(!response) return;
+        if (!response) return;
         setNewsItem(response[0]);
     }, [response]);
 
     return (
-        <LayoutCabinet>
+        <>
             {loading && <div>Loading...</div>}
             {!!error && <div>Something wrong...</div>}
             {newsItem && (
@@ -32,7 +31,7 @@ const NewsMore = ({match}) => {
                     <div>{newsItem.title}</div>
                 </>
             )}
-        </LayoutCabinet>
+        </>
     )
 };
 

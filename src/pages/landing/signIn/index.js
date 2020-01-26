@@ -1,5 +1,4 @@
 import React, {useRef, useState} from "react";
-import LayoutLanding from "pages/landing/layoutLanding";
 import LandingForm from "components/landing-form";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -23,7 +22,7 @@ const SignIn = () => {
     };
 
     return (
-        <LayoutLanding form={true}>
+        <>
             <div className="hide" ref={isActiveComponent}/>
             <LandingForm textButton={textButton}
                          titleForm={titleForm}
@@ -32,7 +31,7 @@ const SignIn = () => {
                          errorMessage={errorMessage}
                          isSubmitted={isSubmitted}
                          onSubmit={handlerSubmit}/>
-        </LayoutLanding>
+        </>
     )
 };
 

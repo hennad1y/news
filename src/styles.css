@@ -31,13 +31,9 @@
     right: 1.25rem;
 }
 
-.card img {
-    height: 152px;
-}
-
 .cabinet-nav {
     position: fixed;
     height: 100vh;
     padding: 10px 0;
-    width: 160px;
+    width: 287px;
 }
