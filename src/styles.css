@@ -42,3 +42,25 @@
     cursor: pointer;
     color: #007bff;
 }
+
+.search {
+    position: relative;
+}
+
+.search i {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.search input {
+    padding-left: 35px;
+}
+
+.page-item {
+    cursor: pointer;
+}
+
+.page-item.disabled {
+    cursor: default;
+}

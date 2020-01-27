@@ -3,7 +3,7 @@ import useAxios from "hooks/useAxios";
 import {Link} from "react-router-dom";
 
 const NewsMore = ({match}) => {
-    const [newsItem, setNewsItem] = useState();
+    const [newsItem, setNewsItem] = useState(null);
     const [{response, loading, error}, doAxios] = useAxios(`qInTitle=${match.params.slug}`);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const NewsMore = ({match}) => {
 
     useEffect(() => {
         if (!response) return;
-        setNewsItem(response[0]);
+        setNewsItem(response.articles[0]);
     }, [response]);
 
     return (

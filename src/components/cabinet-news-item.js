@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const NewsItem = ({item}) => {
     return (
-        <div className="col-xs-12 col-lg-3 mb-2 mt-1">
+        <div className="col-lg-3 mb-2 mt-1">
             <div className="card p-2">
                 <img src={item.urlToImage} className="card-img-top" alt={item.title}/>
                 <div className="card-body">

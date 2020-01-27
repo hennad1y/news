@@ -16,7 +16,7 @@ export default url => {
 
         if (!loading) return;
         axios(baseUrl + url + apiKey)
-            .then(result => isActiveComponent && setResponse(result.data.articles))
+            .then(result => isActiveComponent && setResponse(result.data))
             .catch(error => isActiveComponent && setError(error.message))
             .finally(() => isActiveComponent && setLoading(false));
 
