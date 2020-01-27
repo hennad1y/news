@@ -1,19 +1,17 @@
-import React, {useContext, useEffect, useState} from "react";
-import {UserContext} from "context/userContext";
+import React, {useEffect, useState} from "react";
 import NewsItem from "components/cabinet-news-item";
 import useAxios from "hooks/useAxios";
 
 const News = () => {
 
-    const [userState] = useContext(UserContext);
     const [news, setNews] = useState([]);
     const [page] = useState(1);
     const [limit] = useState(20);
-    const [{response, loading, error}, doAxios] = useAxios(`q=news&page=${page}&pageSize=${limit}`);
+    const [{response, loading, error}, doAxios] = useAxios(`q=news&page=${page}&pageSize=${limit}&language=en`);
 
     useEffect(() => {
-        if (userState.isLoggedIn) doAxios();
-    }, [doAxios, userState]);
+        doAxios();
+    }, [doAxios]);
 
     useEffect(() => {
         if (!response) return;

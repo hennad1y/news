@@ -1,37 +1,25 @@
-import React, {useRef, useState} from "react";
+import React from "react";
 import LandingForm from "components/landing-form";
-import firebase from "firebase/app";
-import "firebase/auth";
+import useFirebase from "hooks/useFirebase";
 
 const SignIn = () => {
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const isActiveComponent = useRef(null);
+    const [{errorMessage, isSubmitted}, doOperationFirebase] = useFirebase();
     const textButton = 'Sign in';
     const titleForm = 'Sign in to Cabinet';
     const link = '/sign-up';
     const linkText = 'Create an account';
 
-    const handlerSubmit = ({email, password}) => {
-        setIsSubmitted(true);
-        firebase.auth()
-            .signInWithEmailAndPassword(email, password)
-            .catch(error => isActiveComponent.current && setErrorMessage(error.message))
-            .finally(() => isActiveComponent.current && setIsSubmitted(false));
-    };
+    const handlerSubmit = ({email, password}) => doOperationFirebase('signIn', {email, password});
 
     return (
-        <>
-            <div className="hide" ref={isActiveComponent}/>
-            <LandingForm textButton={textButton}
-                         titleForm={titleForm}
-                         link={link}
-                         linkText={linkText}
-                         errorMessage={errorMessage}
-                         isSubmitted={isSubmitted}
-                         onSubmit={handlerSubmit}/>
-        </>
+        <LandingForm textButton={textButton}
+                     titleForm={titleForm}
+                     link={link}
+                     linkText={linkText}
+                     errorMessage={errorMessage}
+                     isSubmitted={isSubmitted}
+                     onSubmit={handlerSubmit}/>
     )
 };
 

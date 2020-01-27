@@ -6,6 +6,7 @@ import {UserProvider} from "context/userContext";
 import CheckedUser from "components/checkedUser";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "font-awesome/css/font-awesome.min.css";
 import "./styles.css";
 
 import "./firebase";

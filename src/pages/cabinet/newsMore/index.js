@@ -1,20 +1,14 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import useAxios from "hooks/useAxios";
-import {UserContext} from "context/userContext";
 import {Link} from "react-router-dom";
 
 const NewsMore = ({match}) => {
-    const [userState] = useContext(UserContext);
     const [newsItem, setNewsItem] = useState();
     const [{response, loading, error}, doAxios] = useAxios(`qInTitle=${match.params.slug}`);
 
     useEffect(() => {
-        if (userState.isLoggedIn) doAxios();
-    }, [doAxios, userState]);
-
-    useEffect(() => {
-        if (userState.isLoggedIn) doAxios();
-    }, [doAxios, userState]);
+        doAxios();
+    }, [doAxios]);
 
     useEffect(() => {
         if (!response) return;

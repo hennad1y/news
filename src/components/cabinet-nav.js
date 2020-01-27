@@ -1,17 +1,15 @@
 import React, {useContext} from "react";
 import {NavLink} from "react-router-dom";
-import firebase from "firebase/app";
-import "firebase/auth";
 import {UserContext} from "context/userContext";
-
+import useFirebase from "hooks/useFirebase";
 
 const CabinetNav = () => {
 
     const [, dispatch] = useContext(UserContext);
+    const [, doOperationFirebase] = useFirebase();
 
-    const logout = e => {
-        e.preventDefault();
-        firebase.auth().signOut();
+    const logout = async () => {
+        await doOperationFirebase('signOut');
         dispatch({type: 'UNAUTHORIZED'});
     };
 
@@ -20,8 +18,8 @@ const CabinetNav = () => {
             <li className="nav-item">
                 <NavLink className="nav-link" to="/news">News</NavLink>
             </li>
-            <li className="nav-item mt-auto">
-                <a className="nav-link" href="/" onClick={logout}>Logout</a>
+            <li className="nav-item mt-auto logout" onClick={logout}>
+                <i className="fa fa-sign-out" />&nbsp;Logout
             </li>
         </ul>
     )

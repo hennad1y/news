@@ -37,3 +37,8 @@
     padding: 10px 0;
     width: 287px;
 }
+
+.logout {
+    cursor: pointer;
+    color: #007bff;
+}
