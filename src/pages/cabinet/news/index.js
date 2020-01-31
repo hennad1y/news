@@ -1,84 +1,85 @@
 import React, {useEffect, useState} from "react";
 import NewsItem from "components/cabinet-news-item";
 import useAxios from "hooks/useAxios";
-import Pagination from "components/pagination";
+import Toolbar from "components/toolbar";
 
 const News = () => {
 
     const [news, setNews] = useState(null);
-    const [page, setPage] = useState(1);
     const [limit] = useState(20);
-    const [language] = useState('en');
+    const [language, setLanguage] = useState('en');
+    const [languages] = useState(['en', 'ru', 'fr', 'de', 'es']);
+    const [page, setPage] = useState(1);
     const [searchString, setSearchString] = useState('');
+    const [timeoutSearchString, setTimeoutSearchString] = useState('');
     const [totalPages, setTotalPages] = useState(null);
     const [{response, loading, error}, doAxios] = useAxios(`q=news&page=${page}&pageSize=${limit}&language=${language}`);
     const [{response: responseSearch, loading: loadingSearch, error: errorSearch}, doAxiosSearch] = useAxios(`qInTitle=${searchString}&page=${page}&pageSize=${limit}&language=${language}`);
 
     useEffect(() => {
-        if (searchString) return;
-
         setNews(null);
-        doAxios();
-    }, [doAxios, searchString, page]);
+        timeoutSearchString ? doAxiosSearch() : doAxios();
+    }, [doAxios, doAxiosSearch, timeoutSearchString, page, language]);
 
     useEffect(() => {
-        if (!searchString) return;
-
         const timer = setTimeout(() => {
-            setNews(null);
-            doAxiosSearch();
-        }, 1000);
+            setPage(1);
+            setTimeoutSearchString(searchString)
+        }, 700);
 
         return () => clearTimeout(timer);
-    }, [doAxiosSearch, searchString, page]);
+    }, [searchString]);
+
+    useEffect(() => setPage(1), [language]);
 
     useEffect(() => {
         if (!response) return;
 
-        setNews(response.articles);
-        // set max 5 total pages because news resource doesn't give more
         const pages = Math.ceil(response.totalResults / limit);
-        setTotalPages(pages > 5 ? 5 : pages);
-        // setTotalPages(Math.ceil(response.totalResults / limit))
+        // set 5 total pages because news resource doesn't give more
+        setResponse(response.articles, pages > 5 ? 5 : pages);
     }, [response, limit]);
 
     useEffect(() => {
         if (!responseSearch) return;
 
-        setNews(responseSearch.articles);
-        // set 5 total pages because news resource doesn't give more
         const pages = Math.ceil(responseSearch.totalResults / limit);
-        setTotalPages(pages > 5 ? 5 : pages);
-        // setTotalPages(Math.ceil(responseSearch.totalResults / limit))
-    }, [responseSearch, limit, doAxiosSearch]);
+        // set 5 total pages because news resource doesn't give more
+        setResponse(responseSearch.articles, pages > 5 ? 5 : pages);
+    }, [responseSearch, limit]);
+    //
+    const setResponse = (responseNews, responsePages) => {
+        setNews(responseNews);
+        setTotalPages(responsePages);
+    };
 
-
-    const handleGetNews = (page) => setPage(page);
 
     return (
         <div className="row">
-            {(loading || loadingSearch) && !response && <div>Loading...</div>}
-            {(!!error || !!errorSearch) && <div>Something wrong...</div>}
-            {response && (
+            {(response || responseSearch) && (
                 <>
                     <div className="col-12 mt-3">
-                        <div className="d-flex toolbar">
-                            {totalPages > 1 && (
-                                <Pagination currentPage={page} totalPages={totalPages} getNewsByPage={handleGetNews}/>)}
-                            <fieldset className="form-group ml-auto search">
-                                <i className="fa fa-search"/>
-                                <input type="text"
-                                       className="form-control"
-                                       placeholder="Search"
-                                       value={searchString}
-                                       onChange={e => setSearchString(e.target.value)}/>
-                            </fieldset>
-                        </div>
+                        <Toolbar
+                            language={language}
+                            languages={languages}
+                            page={page}
+                            searchString={searchString}
+                            totalPages={totalPages}
+                            setLanguage={setLanguage}
+                            setSearchString={setSearchString}
+                            setPage={setPage}/>
                     </div>
                     <div className="col-12">
                         <div className="row">
+                            {(loading || loadingSearch) && <div>Loading...</div>}
+                            {(!!error || !!errorSearch) && <div>Something wrong...</div>}
                             {news && news.length === 0 && (<div>List Empty</div>)}
-                            {news && (news.map((item, index) => <NewsItem key={index} item={item}/>))}
+                            {news && (news.map((item, index) => {
+                                // hard code because need correct url
+                                if (item.title.indexOf('%') > -1) return null;
+
+                                return <NewsItem key={item.publishedAt + index} item={item}/>
+                            }))}
                         </div>
                     </div>
                 </>

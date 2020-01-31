@@ -12,9 +12,12 @@ export default url => {
     const doAxios = useCallback(() => setLoading(true), []);
 
     useEffect(() => {
+        if (!loading) return;
+
         let isActiveComponent = true;
 
-        if (!loading) return;
+        localStorage.setItem('urlForLinkBack', url);
+
         axios(baseUrl + url + apiKey)
             .then(result => isActiveComponent && setResponse(result.data))
             .catch(error => isActiveComponent && setError(error.message))
