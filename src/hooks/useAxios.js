@@ -6,17 +6,24 @@ export default url => {
     const baseUrl = 'https://newsapi.org/v2/everything?';
     const apiKey = '&apiKey=10260228bb0e4f959496d682d93fd046';
     const [response, setResponse] = useState(null);
+    const [ignore, setIgnore] = useState(false);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
 
-    const doAxios = useCallback(() => setLoading(true), []);
+    const doAxios = useCallback((ignore = false) => {
+        setIgnore(ignore);
+        setLoading(true)
+    }, []);
 
     useEffect(() => {
         if (!loading) return;
 
         let isActiveComponent = true;
 
-        localStorage.setItem('urlForLinkBack', url);
+        if (!ignore) {
+            localStorage.setItem('urlForLinkBack', url);
+            setIgnore(false)
+        }
 
         axios(baseUrl + url + apiKey)
             .then(result => isActiveComponent && setResponse(result.data))

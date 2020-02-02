@@ -6,6 +6,7 @@ import Home from "pages/landing/home";
 import SignIn from "pages/landing/signIn";
 import SignUp from "pages/landing/signUp";
 
+import {NewsProvider} from "context/newsContext";
 import LayoutCabinet from "pages/cabinet/layoutCabinet";
 import News from "pages/cabinet/news";
 import NewsMore from "pages/cabinet/newsMore";
@@ -25,8 +26,10 @@ export default () => {
 
 
             {/*cabinet*/}
-            <Route path="/news" component={withLayoutCabinet(News)} exact/>
-            <Route path="/news/:slug" component={withLayoutCabinet(NewsMore)}/>
+            <NewsProvider>
+                <Route path="/news" component={withLayoutCabinet(News)} exact/>
+                <Route path="/news/:slug" component={withLayoutCabinet(NewsMore)}/>
+            </NewsProvider>
 
             {/*error*/}
             <Route component={Error}/>

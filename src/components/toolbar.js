@@ -12,9 +12,9 @@ const Toolbar = ({language, languages, page, searchString, totalPages, setPage, 
 
             <div className="d-flex ml-auto align-items-center">
                 <span className="mr-2">Language:</span>
-                <select className="custom-select" onChange={e => setLanguage(e.target.value)}>
+                <select className="custom-select" defaultValue={language} onChange={e => setLanguage(e.target.value)}>
                     {languages.map(item => (
-                        <option key={item} defaultValue={item === language}>
+                        <option key={item} value={item}>
                             {item}
                         </option>
                     ))}
