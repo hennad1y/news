@@ -5,6 +5,7 @@ import "firebase/auth";
 export default () => {
     const [data, setData] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [response, setResponse] = useState(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const doOperationFirebase = useCallback((nameOperation = '', values = {email: '', password: ''}) => {
@@ -32,10 +33,18 @@ export default () => {
                 .finally(() => isActive && setIsSubmitted(false));
         }
 
+        if (data.nameOperation === 'getFavorites') {
+            const userUid = firebase.auth().currentUser.uid;
+            firebase.database().ref(`/favorites/${userUid}`)
+                .once('value',
+                    result => isActive && setResponse(result),
+                    error => isActive && setErrorMessage(error.message))
+        }
+
         if (data.nameOperation === 'signOut') firebase.auth().signOut();
 
         return () => isActive = false;
     }, [data]);
 
-    return [{errorMessage, isSubmitted}, doOperationFirebase]
+    return [{errorMessage, isSubmitted, response}, doOperationFirebase]
 }

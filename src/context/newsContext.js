@@ -1,13 +1,17 @@
 import React, {createContext, useReducer} from "react";
 
 const initialState = {
-    linkBack: null
+    linkBack: null,
+    favorites: null
 };
 
 const reducer = (state, action) => {
-    switch (action.type) {
+    const {linkBack, favorites, type} = action;
+    switch (type) {
         case 'SETLINK':
-            return {...state, linkBack: action.linkBack};
+            return {...state, linkBack};
+        case 'SETFAVORITES':
+            return {...state, favorites};
         default:
             return state;
     }

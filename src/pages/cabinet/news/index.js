@@ -13,7 +13,7 @@ const News = () => {
     const [news, setNews] = useState(null);
     const [limit] = useState(20);
     const [language, setLanguage] = useState(getDataByRegex(newsState.linkBack, /language=(.*)/, 'en'));
-    const [languages] = useState(['fr', 'en', 'ru', 'de', 'es']);
+    const [languages] = useState(['en', 'ru', 'de', 'es', 'fr']);
     const [page, setPage] = useState(+getDataByRegex(newsState.linkBack, /page=(.*?)&/, 1));
     const [searchString, setSearchString] = useState(getDataByRegex(newsState.linkBack, /qInTitle=(.*?)&/, ''));
     const [timeoutSearchString, setTimeoutSearchString] = useState(getDataByRegex(newsState.linkBack, /qInTitle=(.*?)&/, ''));
@@ -41,7 +41,7 @@ const News = () => {
         }, 700);
 
         return () => clearTimeout(timer);
-    }, [searchString, newsState]);
+    }, [searchString]);
 
     useEffect(() => {
 

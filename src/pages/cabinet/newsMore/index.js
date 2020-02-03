@@ -9,8 +9,6 @@ const NewsMore = ({match}) => {
     const [newsState] = useContext(NewsContext);
     const [{response, loading, error}, doAxios] = useAxios(`qInTitle=${match.params.slug}`);
 
-    console.log();
-
     useEffect(() => {
         doAxios(true);
     }, [doAxios]);

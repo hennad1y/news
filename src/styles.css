@@ -31,6 +31,11 @@
     right: 1.25rem;
 }
 
+.card .btn.favorite {
+    left: 1.25rem;
+    right: auto;
+}
+
 .cabinet-nav {
     position: fixed;
     height: 100vh;

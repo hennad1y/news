@@ -18,6 +18,9 @@ const CabinetNav = () => {
             <li className="nav-item">
                 <NavLink className="nav-link" to="/news">News</NavLink>
             </li>
+            <li className="nav-item">
+                <NavLink className="nav-link" to="/favorites">Favorites</NavLink>
+            </li>
             <li className="nav-item mt-auto logout" onClick={logout}>
                 <i className="fa fa-sign-out" />&nbsp;Logout
             </li>
