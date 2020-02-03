@@ -13,12 +13,12 @@ const LayoutCabinet = ({children}) => {
     if (!userState.isLoggedIn) return <Redirect to="/"/>;
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid cabinet">
             <div className="row">
-                <div className="col-md-2">
+                <div className="sidebar">
                     <CabinetNav />
                 </div>
-                <div className="col-md-10">
+                <div className="main">
                     {children}
                 </div>
             </div>

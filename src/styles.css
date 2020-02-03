@@ -35,7 +35,7 @@
     position: fixed;
     height: 100vh;
     padding: 10px 0;
-    width: 287px;
+    width: 280px;
 }
 
 .logout {
@@ -63,4 +63,19 @@
 
 .page-item.disabled {
     cursor: default;
+}
+
+.cabinet .sidebar {
+    width: 100%;
+    max-width: 320px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    padding: 0 20px;
+}
+
+.cabinet .main {
+    width: calc(100vw - 360px);
+    margin-left: 320px;
 }
