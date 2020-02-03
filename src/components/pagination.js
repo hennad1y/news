@@ -74,7 +74,7 @@ const Pagination = ({currentPage, totalPages, handleTogglePage}) => {
                             });
 
                             return (
-                                <li className={classLi} key={index} onClick={() => goToPage(item)}>
+                                <li className={classLi} key={index} onClick={() => !Number.isInteger(item) || goToPage(item)}>
                                     <span className="page-link">{item}</span>
                                 </li>
                             )
