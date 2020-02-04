@@ -2,7 +2,7 @@ import {useContext, useEffect} from "react";
 
 import {NewsContext} from "context/newsContext";
 import useFirebase from "hooks/useFirebase";
-
+import {SET_FAVORITES, GET_FAVORITES} from "types";
 
 const CheckedFavoritesNews = ({children}) => {
     const [, dispatch] = useContext(NewsContext);
@@ -10,7 +10,7 @@ const CheckedFavoritesNews = ({children}) => {
 
 
     useEffect(() => {
-        doOperationFirebase('getFavorites')
+        doOperationFirebase(GET_FAVORITES)
     }, [doOperationFirebase]);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const CheckedFavoritesNews = ({children}) => {
             favorites.push(item.val()['title'])
         });
 
-        dispatch({type: 'SETFAVORITES', favorites})
+        dispatch({type: SET_FAVORITES, favorites})
     }, [response, dispatch]);
 
     return children

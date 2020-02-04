@@ -1,18 +1,26 @@
 import {useContext, useEffect} from "react";
-import firebase from "firebase/app";
-import "firebase/auth";
 
 import {UserContext} from "context/userContext";
+import {AUTHORIZED, UNAUTHORIZED, AUTH_STATE} from "types";
+import useFirebase from "hooks/useFirebase";
 
 const CheckedUser = ({children}) => {
     const [, dispatch] = useContext(UserContext);
+    const [{response, errorMessage}, doOperationFirebase] = useFirebase();
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged(user => {
-            user && dispatch({type: 'AUTHORIZED'});
-            !user && dispatch({type: 'UNAUTHORIZED'});
-        });
-    }, [dispatch]);
+        if (!response) return;
+        dispatch({type: AUTHORIZED})
+    }, [response, dispatch]);
+
+    useEffect(() => {
+        if (!errorMessage) return;
+        dispatch({type: UNAUTHORIZED})
+    }, [errorMessage, dispatch]);
+
+    useEffect(() => {
+        doOperationFirebase(AUTH_STATE);
+    }, [doOperationFirebase]);
 
     return children
 };

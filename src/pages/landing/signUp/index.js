@@ -1,6 +1,7 @@
 import React from "react";
 import LandingForm from "components/landing-form";
 import useFirebase from "hooks/useFirebase";
+import {SIGN_UP} from "types";
 
 const SignUp = () => {
 
@@ -10,7 +11,7 @@ const SignUp = () => {
     const link = '/sign-in';
     const linkText = 'Have an account?';
 
-    const handlerSubmit = ({email, password}) => doOperationFirebase('signUp', {email, password});
+    const handlerSubmit = ({email, password}) => doOperationFirebase(SIGN_UP, {email, password});
 
     return (
         <LandingForm textButton={textButton}

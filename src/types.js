@@ -1,0 +1,12 @@
+export const SET_LINK = 'SET_LINK';
+export const SET_FAVORITES = 'SET_FAVORITES';
+export const UNAUTHORIZED = 'UNAUTHORIZED';
+export const AUTHORIZED = 'AUTHORIZED';
+export const AUTH_STATE = 'AUTH_STATE';
+export const ADD_FAVORITE = 'ADD_FAVORITE';
+export const UPDATE_FAVORITE = 'UPDATE_FAVORITE';
+export const GET_VALUES_FAVORITES = 'GET_VALUES_FAVORITES';
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_OUT = 'SIGN_OUT';
+export const GET_FAVORITES = 'GET_FAVORITES';

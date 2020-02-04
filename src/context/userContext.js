@@ -1,4 +1,5 @@
 import React, {createContext, useReducer} from "react";
+import {AUTHORIZED, UNAUTHORIZED} from "types";
 
 const initialState = {
     isLoading: true,
@@ -6,10 +7,11 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-    switch (action.type) {
-        case 'UNAUTHORIZED':
+    const {type} = action;
+    switch (type) {
+        case UNAUTHORIZED:
             return {...state, isLoggedIn: false, isLoading: false};
-        case 'AUTHORIZED':
+        case AUTHORIZED:
             return {...state, isLoggedIn: true, isLoading: false};
         default:
             return state;

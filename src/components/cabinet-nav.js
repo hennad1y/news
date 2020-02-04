@@ -1,17 +1,21 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {NavLink} from "react-router-dom";
 import {UserContext} from "context/userContext";
 import useFirebase from "hooks/useFirebase";
+import {UNAUTHORIZED, SIGN_OUT} from "types";
 
 const CabinetNav = () => {
 
     const [, dispatch] = useContext(UserContext);
-    const [, doOperationFirebase] = useFirebase();
+    const [{response}, doOperationFirebase] = useFirebase();
 
-    const logout = async () => {
-        await doOperationFirebase('signOut');
-        dispatch({type: 'UNAUTHORIZED'});
-    };
+    useEffect(() => {
+        if (!response) return;
+
+        dispatch({type: UNAUTHORIZED})
+    }, [response, dispatch]);
+
+    const logout = () => doOperationFirebase(SIGN_OUT);
 
     return (
         <ul className="nav nav-pills flex-column cabinet-nav">
@@ -22,7 +26,7 @@ const CabinetNav = () => {
                 <NavLink className="nav-link" to="/favorites">Favorites</NavLink>
             </li>
             <li className="nav-item mt-auto logout" onClick={logout}>
-                <i className="fa fa-sign-out" />&nbsp;Logout
+                <i className="fa fa-sign-out"/>&nbsp;Logout
             </li>
         </ul>
     )

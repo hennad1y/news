@@ -4,17 +4,16 @@ import {NewsContext} from "context/newsContext";
 import useFirebase from "hooks/useFirebase";
 import classNames from "classnames";
 
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+import {SET_LINK, SET_FAVORITES, GET_FAVORITES, ADD_FAVORITE, GET_VALUES_FAVORITES, UPDATE_FAVORITE} from "types";
 
 const NewsItem = ({item}) => {
 
     const [newsState, dispatch] = useContext(NewsContext);
-    const [{response}, doOperationFirebase] = useFirebase();
+    const [{response, responseFavorites}, doOperationFirebase] = useFirebase();
+    const [title, setTitle] = useState(null);
     const [linkBack] = useState(localStorage.getItem('urlForLinkBack'));
 
-    const setLinkBack = () => dispatch({type: 'SETLINK', linkBack});
+    const setLinkBack = () => dispatch({type: SET_LINK, linkBack});
 
     useEffect(() => {
         if (!response) return;
@@ -25,33 +24,37 @@ const NewsItem = ({item}) => {
             favorites.push(item.val()['title'])
         });
 
-        dispatch({type: 'SETFAVORITES', favorites})
+        dispatch({type: SET_FAVORITES, favorites})
 
     }, [response, dispatch]);
 
+    useEffect(() => {
+        if (!responseFavorites) return;
+
+        const favorites = {};
+
+        responseFavorites.forEach(item => {
+            if (item.val()['title'] !== title) return;
+            favorites[item.key] = null
+        });
+
+        const updateFavorites = async () => await doOperationFirebase(UPDATE_FAVORITE, {favorites});
+
+        updateFavorites().finally(() => doOperationFirebase(GET_FAVORITES));
+
+    }, [responseFavorites, doOperationFirebase, title]);
+
     const handleFavoriteNews = async (title) => {
-        const userUid = firebase.auth().currentUser.uid;
         const isExist = newsState.favorites && newsState.favorites.filter(favorite => (favorite === item.title));
-        const ref = firebase.database().ref(`/favorites/${userUid}`);
 
-        if (!isExist.length) {
-            await ref.push({title});
+        if (!(isExist && isExist.length)) {
+            await doOperationFirebase(ADD_FAVORITE, {title});
+            doOperationFirebase(GET_FAVORITES);
         } else {
-            await ref.orderByChild('title').once('value', result => {
-                const favorites = {};
-
-                result.forEach(item => {
-                    if (item.val()['title'] !== title) return;
-                    if (typeof item.val()['title'] !== "string") return;
-
-                    favorites[item.key] = null
-                });
-
-                ref.update(favorites);
-            });
+            setTitle(title);
+            doOperationFirebase(GET_VALUES_FAVORITES)
         }
 
-        doOperationFirebase('getFavorites')
     };
 
     const resultFavorite = newsState.favorites && newsState.favorites.filter(favorite => (favorite === item.title));
