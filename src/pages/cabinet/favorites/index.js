@@ -6,49 +6,29 @@ import useAxios from "hooks/useAxios";
 const Favorites = () => {
 
     const [newsState] = useContext(NewsContext);
-    const [index, setIndex] = useState(0);
-    const [newsItem, setNewsItem] = useState(false);
-    const [news, setNews] = useState([]);
-    const [done, setDone] = useState(false);
-    const [{response, loading, error}, doAxios] = useAxios(`qInTitle=${newsItem}`);
+    const [news, setNews] = useState(null);
+    const [{response, loading, error}, doAxios] = useAxios(``);
 
     useEffect(() => {
-
-        if (!newsState.favorites || newsState.favorites.length === 0) {
-            setDone(true);
-            return;
-        }
-
-        setNewsItem(newsState.favorites[index]);
-    }, [index, newsState]);
-
-    useEffect(() => {
-        if (!newsItem) return;
-        doAxios(true);
-    }, [doAxios, newsItem]);
+        if (!newsState.favorites) return;
+        
+        doAxios(true, [...newsState.favorites]);
+    }, [doAxios, newsState]);
 
     useEffect(() => {
         if (!response) return;
-        if (!loading) return;
-        if ((loading && news.length) && (news[news.length - 1].title === response.articles[0].title)) return;
 
-        setNews(news.concat(response.articles[0]));
-
-        if (!newsState.favorites[index + 1]) {
-            setDone(true);
-            return;
-        }
-        setIndex(index + 1);
-    }, [response, index, newsState, loading, news]);
+        setNews(response.map(item => item.data.articles[0]));
+    }, [response]);
 
     return (
         <div className="col-12">
             <div className="row">
-                {!done && <div>Loading...</div>}
+                {loading && <div>Loading...</div>}
                 {!!error && <div>Something wrong...</div>}
-                {(done && (news && news.length === 0)) && <div>List Empty</div>}
-                {done && news && (news.map((item, index) => {
-                    return <NewsItem key={item.publishedAt + index} item={item} notActiveLinkBack={true} />
+                {(news && news.length === 0) && <div>List Empty</div>}
+                {!loading && news && (news.map((item, index) => {
+                    return <NewsItem key={item.publishedAt + index} item={item} notActiveLinkBack={true}/>
                 }))}
             </div>
         </div>
