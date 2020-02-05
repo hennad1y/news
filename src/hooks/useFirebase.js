@@ -10,7 +10,8 @@ import {
     AUTH_STATE,
     ADD_FAVORITE,
     GET_VALUES_FAVORITES,
-    UPDATE_FAVORITE
+    UPDATE_FAVORITE,
+    SUBMITTED_DONE
 } from "types";
 
 export default () => {
@@ -72,6 +73,10 @@ export default () => {
                 }
 
             });
+        }
+
+        if (data.nameOperation === SUBMITTED_DONE) {
+            setIsSubmitted(false)
         }
 
         if (data.nameOperation === ADD_FAVORITE) {

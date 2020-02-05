@@ -3,11 +3,13 @@ import useAxios from "hooks/useAxios";
 import {Link} from "react-router-dom";
 import {NewsContext} from "context/newsContext";
 import {format} from "date-fns";
+import FavoriteButton from "components/favorite-button";
 
 const NewsMore = ({match}) => {
     const [newsItem, setNewsItem] = useState(null);
     const [newsState] = useContext(NewsContext);
     const [{response, loading, error}, doAxios] = useAxios(`qInTitle=${match.params.slug}`);
+    console.log(newsState);
 
     useEffect(() => {
         doAxios(true);
@@ -32,6 +34,7 @@ const NewsMore = ({match}) => {
                     <img src={newsItem.urlToImage} alt={newsItem.title} className="w-100 mb-2"/>
                     <h2 className="mb-4">{newsItem.title}</h2>
                     <div>{newsItem.description}</div>
+                    <FavoriteButton titleParent={newsItem.title}/>
                 </div>
             )}
         </div>
