@@ -3,15 +3,18 @@ import {useContext, useEffect} from "react";
 import {NewsContext} from "context/newsContext";
 import useFirebase from "hooks/useFirebase";
 import {SET_FAVORITES, GET_FAVORITES} from "types";
+import {UserContext} from "context/userContext";
 
 const CheckedFavoritesNews = ({children}) => {
+    const [userState] = useContext(UserContext);
     const [, dispatch] = useContext(NewsContext);
     const [{response}, doOperationFirebase] = useFirebase();
 
 
     useEffect(() => {
+        if (!userState.isLoggedIn) return;
         doOperationFirebase(GET_FAVORITES)
-    }, [doOperationFirebase]);
+    }, [doOperationFirebase, userState]);
 
     useEffect(() => {
         if (!response) return;

@@ -4,6 +4,8 @@ import {BrowserRouter as Router} from "react-router-dom";
 
 import {UserProvider} from "context/userContext";
 import CheckedUser from "components/checkedUser";
+import CheckedFavoritesNews from "components/checkedFavoritesNews";
+import {NewsProvider} from "context/newsContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -17,9 +19,13 @@ const App = () => {
     return (
         <UserProvider>
             <CheckedUser>
-                <Router>
-                    <Routes/>
-                </Router>
+                <NewsProvider>
+                    <CheckedFavoritesNews>
+                        <Router>
+                            <Routes/>
+                        </Router>
+                    </CheckedFavoritesNews>
+                </NewsProvider>
             </CheckedUser>
         </UserProvider>
     )

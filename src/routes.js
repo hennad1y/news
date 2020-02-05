@@ -6,8 +6,6 @@ import Home from "pages/landing/home";
 import SignIn from "pages/landing/signIn";
 import SignUp from "pages/landing/signUp";
 
-import {NewsProvider} from "context/newsContext";
-import CheckedFavoritesNews from "components/checkedFavoritesNews";
 import LayoutCabinet from "pages/cabinet/layoutCabinet";
 import News from "pages/cabinet/news";
 import NewsMore from "pages/cabinet/newsMore";
@@ -16,7 +14,7 @@ import Favorites from "pages/cabinet/favorites";
 import Error from "pages/error";
 
 const withLayoutLanding = Component => props => <LayoutLanding><Component {...props} /></LayoutLanding>;
-const withLayoutCabinet = Component => props => <LayoutCabinet><NewsProvider><CheckedFavoritesNews><Component {...props} /></CheckedFavoritesNews></NewsProvider></LayoutCabinet>;
+const withLayoutCabinet = Component => props => <LayoutCabinet><Component {...props} /></LayoutCabinet>;
 
 export default () => {
     return (

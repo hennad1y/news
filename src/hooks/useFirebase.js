@@ -64,7 +64,7 @@ export default () => {
 
         if (data.nameOperation === AUTH_STATE) {
             firebase.auth().onAuthStateChanged(user => {
-                if(user) {
+                if (user) {
                     setResponse(true);
                     setErrorMessage('');
                 } else {
