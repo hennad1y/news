@@ -4,7 +4,7 @@ import {NewsContext} from "context/newsContext";
 import FavoriteButton from "components/favorite-button";
 import {SET_LINK} from "types";
 
-const NewsItem = ({item}) => {
+const NewsItem = ({item, notActiveLinkBack = false}) => {
 
     const [, dispatch] = useContext(NewsContext);
     const [linkBack] = useState(localStorage.getItem('urlForLinkBack'));
@@ -20,7 +20,7 @@ const NewsItem = ({item}) => {
                     <p className="card-text">{item.description}</p>
                     <FavoriteButton titleParent={item.title}/>
                     <Link to={`/news/${item.title}`} className="btn btn-sm btn-primary"
-                          onClick={setLinkBack}>More</Link>
+                          onClick={() => notActiveLinkBack && setLinkBack}>More</Link>
                 </div>
             </div>
         </div>

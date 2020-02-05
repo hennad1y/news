@@ -9,7 +9,6 @@ const NewsMore = ({match}) => {
     const [newsItem, setNewsItem] = useState(null);
     const [newsState] = useContext(NewsContext);
     const [{response, loading, error}, doAxios] = useAxios(`qInTitle=${match.params.slug}`);
-    console.log(newsState);
 
     useEffect(() => {
         doAxios(true);

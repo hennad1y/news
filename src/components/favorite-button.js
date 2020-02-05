@@ -5,7 +5,7 @@ import {NewsContext} from "context/newsContext";
 
 import {SET_FAVORITES, GET_FAVORITES, ADD_FAVORITE, GET_VALUES_FAVORITES, UPDATE_FAVORITE, SUBMITTED_DONE} from "types";
 
-const FavoriteButton = ({titleParent}) => {
+const FavoriteButton = ({titleParent, setTitleRemove = false}) => {
 
     const [newsState, dispatch] = useContext(NewsContext);
     const [{response, isSubmitted, responseFavorites}, doOperationFirebase] = useFirebase();
