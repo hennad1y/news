@@ -15,6 +15,7 @@ const LayoutLanding = ({children}) => {
 
     const classes = classNames({
         'row': true,
+        'p-2': true,
         'justify-content-center': flag,
         'align-items-center': flag,
         'landing-form-wrapper': flag
@@ -25,7 +26,7 @@ const LayoutLanding = ({children}) => {
 
     return (
         <div className="container mt-2 landing">
-            <div className="row">
+            <div className="row p-2">
                 <LandingNav/>
             </div>
             <div className={classes}>

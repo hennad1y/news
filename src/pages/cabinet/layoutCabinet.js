@@ -13,10 +13,13 @@ const LayoutCabinet = ({children}) => {
     if (userState.isLoading) return <Loading/>;
     if (!userState.isLoggedIn) return <Redirect to="/"/>;
 
+    const toggleMenu = () => document.querySelector('body').classList.toggle('open-menu');
+
     return (
         <div className="container-fluid cabinet">
-            <div className="row">
+            <div className="row p-2">
                 <div className="sidebar">
+                    <i className="fa fa-bars icon-menu" onClick={toggleMenu} />
                     <CabinetNav/>
                 </div>
                 <div className="main">

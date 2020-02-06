@@ -24,7 +24,7 @@ const NewsMore = ({match}) => {
             {loading && <div>Loading...</div>}
             {!!error && <div>Something wrong...</div>}
             {newsItem && (
-                <div className="col-6 p-2">
+                <div className="col-10 col-md-6 p-2">
                     {newsState.linkBack && (
                         newsState.linkBack.indexOf('favorites') > -1
                             ? <Link to={newsState.linkBack} className="mb-2">Back</Link>

@@ -12,7 +12,7 @@ const NewsItem = ({item, path = 'news'}) => {
     const setLinkBack = () => dispatch({type: SET_LINK, linkBack});
 
     return (
-        <div className="col-lg-3 mb-2 mt-1">
+        <div className="col-md-6 col-lg-6 col-xl-4 mb-2 mt-1 news-item">
             <div className="card p-2">
                 <img src={item.urlToImage} className="card-img-top" alt={item.title}/>
                 <div className="card-body">

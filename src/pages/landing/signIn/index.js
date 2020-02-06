@@ -20,6 +20,7 @@ const SignIn = () => {
                      linkText={linkText}
                      errorMessage={errorMessage}
                      isSubmitted={isSubmitted}
+                     showTest={true}
                      onSubmit={handlerSubmit}/>
     )
 };

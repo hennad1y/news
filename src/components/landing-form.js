@@ -12,12 +12,12 @@ const SignupSchema = Yup.object().shape({
         .required('Required')
 });
 
-const LandingForm = ({textButton, titleForm, link, linkText, errorMessage, isSubmitted, onSubmit}) => {
+const LandingForm = ({textButton, titleForm, link, linkText, errorMessage, isSubmitted, onSubmit, showTest = false}) => {
     return (
         <Formik
             initialValues={{
-                email: 'test@gmail.com',
-                password: 'testtest'
+                email: '',
+                password: ''
             }}
             validationSchema={SignupSchema}
             onSubmit={values => onSubmit(values)}
@@ -29,6 +29,7 @@ const LandingForm = ({textButton, titleForm, link, linkText, errorMessage, isSub
                         <div className="mb-3 text-sm-left text-danger">{errorMessage}</div>
                     )}
                     <fieldset className="form-group">
+                        {showTest && <small className="text-dark pl-2">email: test@gmail.com</small>}
                         <Field name="email"
                                type="email"
                                autoComplete="off"
@@ -41,6 +42,7 @@ const LandingForm = ({textButton, titleForm, link, linkText, errorMessage, isSub
                     </fieldset>
 
                     <fieldset className="form-group">
+                        {showTest && <small className="text-dark pl-2">password: testtest</small>}
                         <Field name="password"
                                type="password"
                                autoComplete="off"

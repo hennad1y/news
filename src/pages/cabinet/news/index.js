@@ -76,7 +76,7 @@ const News = () => {
 
 
     return (
-        <div className="row">
+        <div className="row p-2">
             {(response || responseSearch) && (
                 <>
                     <div className="col-12 mt-3">
