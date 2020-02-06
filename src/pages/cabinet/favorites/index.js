@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {NewsContext} from "context/newsContext";
 import NewsItem from "components/cabinet-news-item";
 import useAxios from "hooks/useAxios";
-import {URL_LINK_BACK} from "types";
+import {URL_LINK_BACK, REMOVE_LINK} from "types";
 
 const Favorites = () => {
 
@@ -18,6 +18,7 @@ const Favorites = () => {
 
     useEffect(() => {
         localStorage.setItem(URL_LINK_BACK, '/favorites');
+        dispatch({type: REMOVE_LINK})
     }, [dispatch]);
 
     useEffect(() => {
