@@ -14,7 +14,7 @@ const Favorites = () => {
         if (!newsState.favorites) return;
 
         doAxios(true, [...newsState.favorites]);
-    }, [doAxios, newsState]);
+    }, [doAxios, newsState.favorites]);
 
     useEffect(() => {
         localStorage.setItem(URL_LINK_BACK, '/favorites');

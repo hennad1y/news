@@ -14,7 +14,7 @@ const CheckedFavoritesNews = ({children}) => {
     useEffect(() => {
         if (!userState.isLoggedIn) return;
         doOperationFirebase(GET_FAVORITES)
-    }, [doOperationFirebase, userState]);
+    }, [doOperationFirebase, userState.isLoggedIn]);
 
     useEffect(() => {
         if (!response) return;
