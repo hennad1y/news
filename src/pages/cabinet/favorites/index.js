@@ -2,18 +2,23 @@ import React, {useContext, useEffect, useState} from "react";
 import {NewsContext} from "context/newsContext";
 import NewsItem from "components/cabinet-news-item";
 import useAxios from "hooks/useAxios";
+import {URL_LINK_BACK} from "types";
 
 const Favorites = () => {
 
-    const [newsState] = useContext(NewsContext);
+    const [newsState, dispatch] = useContext(NewsContext);
     const [news, setNews] = useState(null);
     const [{response, loading, error}, doAxios] = useAxios(``);
 
     useEffect(() => {
         if (!newsState.favorites) return;
-        
+
         doAxios(true, [...newsState.favorites]);
     }, [doAxios, newsState]);
+
+    useEffect(() => {
+        localStorage.setItem(URL_LINK_BACK, '/favorites');
+    }, [dispatch]);
 
     useEffect(() => {
         if (!response) return;
@@ -28,7 +33,7 @@ const Favorites = () => {
                 {!!error && <div>Something wrong...</div>}
                 {(news && news.length === 0) && <div>List Empty</div>}
                 {!loading && news && (news.map((item, index) => {
-                    return <NewsItem key={item.publishedAt + index} item={item} notActiveLinkBack={true}/>
+                    return <NewsItem key={item.publishedAt + index} item={item} path={'favorites'}/>
                 }))}
             </div>
         </div>

@@ -25,7 +25,11 @@ const NewsMore = ({match}) => {
             {!!error && <div>Something wrong...</div>}
             {newsItem && (
                 <div className="col-6 p-2">
-                    {newsState.linkBack && <Link to="/news" className="mb-2">Back</Link>}
+                    {newsState.linkBack && (
+                        newsState.linkBack.indexOf('favorites') > -1
+                            ? <Link to={newsState.linkBack} className="mb-2">Back</Link>
+                            : <Link to="/news" className="mb-2">Back</Link>
+                    )}
                     <div className="d-flex justify-content-between mb-2">
                         <span>{newsItem.author}</span>
                         <span>{format(new Date(newsItem.publishedAt), 'dd.MM.yyyy H:mm')}</span>

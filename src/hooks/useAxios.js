@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
+import {URL_LINK_BACK} from "types";
 
 export default url => {
 
@@ -23,7 +24,7 @@ export default url => {
         let isActiveComponent = true;
 
         if (!ignore) {
-            localStorage.setItem('urlForLinkBack', url);
+            localStorage.setItem(URL_LINK_BACK, url);
             setIgnore(false)
         }
 

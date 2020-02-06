@@ -28,7 +28,8 @@ export default () => {
             {/*cabinet*/}
             <Route path="/news" component={withLayoutCabinet(News)} exact/>
             <Route path="/news/:slug" component={withLayoutCabinet(NewsMore)}/>
-            <Route path="/favorites" component={withLayoutCabinet(Favorites)}/>
+            <Route path="/favorites" component={withLayoutCabinet(Favorites)} exact/>
+            <Route path="/favorites/:slug" component={withLayoutCabinet(NewsMore)}/>
 
             {/*error*/}
             <Route component={Error}/>
