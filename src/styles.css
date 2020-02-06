@@ -84,3 +84,22 @@
     width: calc(100vw - 360px);
     margin-left: 320px;
 }
+
+body.open-modal {
+    overflow: hidden;
+    padding-right: 17px;
+}
+
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, .6);
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+    padding-right: 17px;
+}
+
+.modal-content {
+    padding: 5px 10px;
+}

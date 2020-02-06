@@ -2,12 +2,23 @@ import React, {useContext, useEffect, useState} from "react";
 import classNames from "classnames";
 import useFirebase from "hooks/useFirebase";
 import {NewsContext} from "context/newsContext";
+import {UserContext} from "context/userContext";
+import {
+    SET_FAVORITES,
+    GET_FAVORITES,
+    ADD_FAVORITE,
+    GET_VALUES_FAVORITES,
+    UPDATE_FAVORITE,
+    SUBMITTED_DONE,
+    SET_MESSAGE
+} from "types";
 
-import {SET_FAVORITES, GET_FAVORITES, ADD_FAVORITE, GET_VALUES_FAVORITES, UPDATE_FAVORITE, SUBMITTED_DONE} from "types";
-
-const FavoriteButton = ({titleParent, setTitleRemove = false}) => {
+const FavoriteButton = ({titleParent}) => {
 
     const [newsState, dispatch] = useContext(NewsContext);
+    const [, dispatchUser] = useContext(UserContext);
+    const [limitFavorite] = useState(4);
+    const [showPopUp, setShowPopUp] = useState(false);
     const [{response, isSubmitted, responseFavorites}, doOperationFirebase] = useFirebase();
     const [title, setTitle] = useState(null);
 
@@ -41,10 +52,29 @@ const FavoriteButton = ({titleParent, setTitleRemove = false}) => {
 
     }, [responseFavorites, doOperationFirebase, title]);
 
+    useEffect(() => {
+        if (!showPopUp) return;
+
+        dispatchUser({type: SET_MESSAGE, message: 'Too much favorite news'});
+        document.querySelector('body').classList.add('open-modal');
+        document.querySelector('.modal').classList.add('show');
+    }, [showPopUp, dispatchUser]);
+
     const handleFavoriteNews = async (title) => {
         const isExist = newsState.favorites && newsState.favorites.filter(favorite => (favorite === title));
 
         if (!(isExist && isExist.length)) {
+            if (newsState.favorites && newsState.favorites.length === limitFavorite) {
+                setShowPopUp(true);
+
+                setTimeout(() => {
+                    document.querySelector('body').classList.remove('open-modal');
+                    document.querySelector('.modal').classList.remove('show');
+                    setShowPopUp(false);
+                }, 1500);
+                return;
+            }
+
             await doOperationFirebase(ADD_FAVORITE, {title});
             doOperationFirebase(GET_FAVORITES);
         } else {
@@ -63,7 +93,7 @@ const FavoriteButton = ({titleParent, setTitleRemove = false}) => {
     });
 
     return (
-        <button type="button" className="btn btn-sm btn-primary favorite" disabled={isSubmitted}
+        <button type="button" className="btn btn-sm btn-primary favorite" disabled={isSubmitted || showPopUp}
                 onClick={() => handleFavoriteNews(titleParent)}>
             <i className={classIcon}/>
             &nbsp;Add to favorite

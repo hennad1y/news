@@ -13,3 +13,4 @@ export const GET_FAVORITES = 'GET_FAVORITES';
 export const SUBMITTED_DONE = 'SUBMITTED_DONE';
 export const URL_LINK_BACK = 'URL_LINK_BACK';
 export const REMOVE_LINK = 'REMOVE_LINK';
+export const SET_MESSAGE = 'SET_MESSAGE';

@@ -1,18 +1,21 @@
 import React, {createContext, useReducer} from "react";
-import {AUTHORIZED, UNAUTHORIZED} from "types";
+import {AUTHORIZED, UNAUTHORIZED, SET_MESSAGE} from "types";
 
 const initialState = {
     isLoading: true,
-    isLoggedIn: null
+    isLoggedIn: null,
+    message: null
 };
 
 const reducer = (state, action) => {
-    const {type} = action;
+    const {type, message} = action;
     switch (type) {
         case UNAUTHORIZED:
             return {...state, isLoggedIn: false, isLoading: false};
         case AUTHORIZED:
             return {...state, isLoggedIn: true, isLoading: false};
+        case SET_MESSAGE:
+            return {...state, message};
         default:
             return state;
     }
